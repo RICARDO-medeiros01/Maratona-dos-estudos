@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Constância — Acompanhe seu progresso de estudos para concursos públicos. Rastreador de hábitos e semanas de estudo.">
+  <title>Constância — Rastreador de estudos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="shortcut icon" href="assets/estude.png" type="image/x-icon">
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- Header -->
+    <div id="header" class="header"></div>
+
+    <!-- Cycle Config -->
+    <div class="cycle-config">
+      <div class="field">
+        <label for="cycleName">Nome do ciclo:</label>
+        <input type="text" id="cycleName" placeholder="ex: Rumo ao TRF...">
+      </div>
+      <div class="field">
+        <label for="cycleWeeks">Ciclo de semanas:</label>
+        <input type="number" id="cycleWeeks" min="1" max="104" value="53">
+      </div>
+      <button id="btnApply" class="btn-apply">Aplicar</button>
+    </div>
+
+    <!-- Metrics -->
+    <div id="metrics" class="metrics"></div>
+
+    <!-- Heatmap -->
+    <div class="heatmap-section">
+      <div class="heatmap-card">
+        <div class="section-label">Heatmap — dias de estudo</div>
+        <div id="heatmapGrid" class="heatmap-grid"></div>
+        <div class="heatmap-legend">
+          <span>Menos</span>
+          <span class="legend-square" style="background:#EAF3DE"></span>
+          <span class="legend-square" style="background:#C0DD97"></span>
+          <span class="legend-square" style="background:#97C459"></span>
+          <span class="legend-square" style="background:#639922"></span>
+          <span class="legend-square" style="background:#3B6D11"></span>
+          <span>Mais</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Weeks -->
+    <div class="weeks-section">
+      <div class="section-label">Semanas do ciclo</div>
+      <div id="weeksList"></div>
+    </div>
+
+  </div>
+
+  <!-- Notes Modal -->
+  <div id="modalOverlay" class="modal-overlay">
+    <div class="modal">
+      <div class="modal-title">
+        <span id="modalTitle"></span>
+        <button id="modalClose" class="modal-close">×</button>
+      </div>
+      <textarea id="modalTextarea" placeholder="Suas observações..."></textarea>
+      <div class="modal-footer">
+        <button id="btnModalCancel" class="btn-cancel">Cancelar</button>
+        <button id="btnModalSave" class="btn-save">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pomodoro Widget -->
+  <button id="pomodoroToggle" class="pomo-toggle" title="Pomodoro timer">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10" />
+      <polyline points="12 6 12 12 16 14" />
+    </svg>
+    <span class="pomo-toggle-text">Pomodoro</span>
+  </button>
+
+  <div id="pomodoroWidget" class="pomo-widget">
+    <!-- Timer area -->
+    <div class="pomo-timer-area">
+      <div class="pomo-tabs">
+        <button class="pomo-tab active" data-mode="pomodoro">Pomodoro</button>
+        <button class="pomo-tab" data-mode="short">Pausa curta</button>
+        <button class="pomo-tab" data-mode="long">Pausa longa</button>
+      </div>
+      <div id="pomoDisplay" class="pomo-display">25:00</div>
+      <button id="pomoStartBtn" class="pomo-start-btn">Iniciar</button>
+    </div>
+
+    <!-- Task area -->
+    <div class="pomo-task-area">
+      <div class="pomo-task-header">
+        <span id="pomoTaskLabel" class="pomo-task-current">#1</span>
+        <span id="pomoTaskName" class="pomo-task-name">—</span>
+      </div>
+
+      <div class="pomo-section-label">Tarefas</div>
+      <div id="pomoTaskList" class="pomo-task-list"></div>
+
+      <button id="pomoAddTask" class="pomo-add-task">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round">
+          <line x1="12" y1="5" x2="12" y2="19" />
+          <line x1="5" y1="12" x2="19" y2="12" />
+        </svg>
+        Adicionar tarefa
+      </button>
+
+      <div class="pomo-footer">
+        <span>Pomos: <strong id="pomoDoneCount">0</strong>/<strong id="pomoTotalCount">0</strong></span>
+        <span>Término: <strong id="pomoFinishTime">--:--</strong></span>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script src="pomodoro.js"></script>
+</body>
+
+</html>
