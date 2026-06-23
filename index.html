@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description"
     content="Constância — Acompanhe seu progresso de estudos para concursos públicos. Rastreador de hábitos e semanas de estudo.">
-  <title>Constância — Rastreador de estudos</title>
+  <title>Constância O rastreador de estudos</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
@@ -77,6 +77,30 @@
     </div>
   </div>
 
+  <!-- Subjects Widget -->
+  <button id="subjectsToggle" class="subj-toggle" title="Matérias e Assuntos">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>
+    </svg>
+    <span class="subj-toggle-text">Matérias</span>
+  </button>
+
+  <div id="subjectsWidget" class="subj-widget">
+    <div class="subj-header">
+      <h3 class="subj-title">Matérias do Ciclo</h3>
+    </div>
+    <div id="subjList" class="subj-list"></div>
+    <div class="subj-footer">
+      <button id="subjAddBtn" class="subj-add-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="12" y1="5" x2="12" y2="19" />
+          <line x1="5" y1="12" x2="19" y2="12" />
+        </svg>
+        Adicionar matéria
+      </button>
+    </div>
+  </div>
+
   <!-- Pomodoro Widget -->
   <button id="pomodoroToggle" class="pomo-toggle" title="Pomodoro timer">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -127,6 +151,7 @@
 
   <script src="app.js"></script>
   <script src="pomodoro.js"></script>
+  <script src="subjects.js"></script>
 </body>
 
 </html>

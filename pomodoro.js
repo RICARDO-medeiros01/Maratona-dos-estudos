@@ -180,6 +180,43 @@
     renderPomo();
   }
 
+  function editTask(idx, itemElement) {
+    const task = pomoState.tasks[idx];
+    const textSpan = itemElement.querySelector(".pomo-task-text");
+    const originalName = task.name;
+    
+    const input = document.createElement("input");
+    input.type = "text";
+    input.value = originalName;
+    input.className = "pomo-task-edit-input";
+    
+    textSpan.replaceWith(input);
+    input.focus();
+    
+    // Select all text for easier editing
+    input.select();
+    
+    function saveEdit() {
+      const newName = input.value.trim();
+      if (newName) {
+        task.name = newName;
+        savePomo();
+      }
+      renderPomo();
+    }
+    
+    input.addEventListener("blur", saveEdit);
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        input.blur();
+      }
+      if (e.key === "Escape") {
+        input.value = originalName;
+        input.blur();
+      }
+    });
+  }
+
   // ── Render ──
   function renderPomo() {
     const tasks = pomoState.tasks;
@@ -209,9 +246,10 @@
           <button class="pomo-task-menu" title="Opções">⋮</button>
           <div class="pomo-dropdown">
             <button data-action="select">Selecionar</button>
+            <button data-action="edit">Editar</button>
             <button data-action="incr">+ Pomodoro alvo</button>
             <button data-action="decr">− Pomodoro alvo</button>
-            <button data-action="remove" class="danger">Remover</button>
+            <button data-action="remove" class="danger">Excluir</button>
           </div>
         </div>`;
 
@@ -241,6 +279,7 @@
           dropdown.classList.remove("open");
           const action = btn.dataset.action;
           if (action === "select") selectTask(i);
+          else if (action === "edit") editTask(i, item);
           else if (action === "incr") { t.target++; savePomo(); renderPomo(); }
           else if (action === "decr") { t.target = Math.max(1, t.target - 1); savePomo(); renderPomo(); }
           else if (action === "remove") removeTask(i);
