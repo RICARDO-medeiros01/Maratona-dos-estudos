@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maratona dos estudos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="shortcut icon" href="assets/estude.png" type="image/x-icon">
+</head>
+
+<body>
+  <div class="app">
+    <!-- Coluna Esquerda: Matérias -->
+    <aside class="sidebar sidebar-left">
+      <div class="card subjects-card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+            </svg>
+            <h2>Matérias</h2>
+            <span class="badge badge-count" id="subjects-count">0</span>
+          </div>
+          <button class="btn-icon" id="btn-add-subject-header" title="Adicionar matéria">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+          </button>
+        </div>
+        <ul class="subjects-list" id="subjects-list"></ul>
+        <button class="btn-add" id="btn-add-subject">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="5" x2="12" y2="19" />
+            <line x1="5" y1="12" x2="19" y2="12" />
+          </svg>
+          Adicionar matéria
+        </button>
+      </div>
+    </aside>
+
+    <!-- Coluna Central -->
+    <main class="main-content">
+      <header class="page-header" style="position: relative;">
+        <input type="text" id="goal-title" class="goal-title" placeholder="Digite seu objetivo (ex: Rumo à PRF)"
+          maxlength="80">
+        <p class="goal-subtitle">Acompanhe seu progresso para concursos públicos</p>
+        <button class="btn-icon" id="btn-theme-toggle" title="Alternar tema"
+          style="position: absolute; top: 0; right: 0;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </header>
+
+      <div class="cycle-control">
+        <label for="cycle-weeks">Ciclo de semanas:</label>
+        <input type="number" id="cycle-weeks" min="1" max="52" value="2">
+        <button class="btn btn-primary btn-sm" id="btn-apply-cycle">Aplicar</button>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-label">Semanas</span>
+          <span class="stat-value" id="stat-weeks">0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Dias feitos</span>
+          <span class="stat-value stat-green" id="stat-days">0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Progresso</span>
+          <span class="stat-value stat-orange" id="stat-progress">0%</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-label">Sequência</span>
+          <span class="stat-value" id="stat-streak">0d</span>
+        </div>
+      </div>
+
+      <div class="card heatmap-card">
+        <h3 class="section-title">DIAS ESTUADOS</h3>
+
+        <div class="heatmap-wrapper">
+          <div class="heatmap-container" id="heatmap-container"></div>
+        </div>
+        <div class="heatmap-legend">
+          <span>Menos</span>
+          <div class="legend-squares">
+            <span class="heatmap-cell level-0"></span>
+            <span class="heatmap-cell level-1"></span>
+            <span class="heatmap-cell level-2"></span>
+            <span class="heatmap-cell level-3"></span>
+            <span class="heatmap-cell level-4"></span>
+          </div>
+          <span>Mais</span>
+        </div>
+      </div>
+
+      <div class="card weeks-card">
+        <h3 class="section-title">SEMANAS DO CICLO</h3>
+        <div class="weeks-list" id="weeks-list"></div>
+      </div>
+    </main>
+
+    <!-- Coluna Direita -->
+    <aside class="sidebar sidebar-right">
+      <div class="card pomodoro-card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
+            <h2>Pomodoro</h2>
+          </div>
+          <button class="btn-icon" id="btn-pomodoro-settings" title="Configurações">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="3" />
+              <path
+                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+            </svg>
+          </button>
+        </div>
+        <div class="pomodoro-modes">
+          <button class="mode-btn active" data-mode="pomodoro">Pomodoro</button>
+          <button class="mode-btn" data-mode="shortBreak">Pausa curta</button>
+          <button class="mode-btn" data-mode="longBreak">Pausa longa</button>
+        </div>
+        <div class="timer-display" id="timer-display">25:00</div>
+        <div class="timer-controls">
+          <button class="btn-icon btn-reset" id="btn-timer-reset" title="Reset">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+              <path d="M3 3v5h5" />
+            </svg>
+          </button>
+          <button class="btn btn-primary btn-start" id="btn-timer-toggle">
+            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3" />
+            </svg>
+            <span id="timer-toggle-text">Iniciar</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="card tasks-card">
+        <div class="card-header">
+          <h2 class="tasks-title">TAREFAS E METAS</h2>
+          <button class="btn-icon" id="btn-add-task-header" title="Adicionar tarefa">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+          </button>
+        </div>
+        <ul class="tasks-list" id="tasks-list"></ul>
+        <div class="task-add-inline" id="task-add-inline">
+          <input type="text" id="task-input" placeholder="Nome da tarefa..." maxlength="120">
+          <button class="btn-task-confirm" id="btn-task-confirm" title="Confirmar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </button>
+          <button class="btn-task-cancel" id="btn-task-cancel" title="Cancelar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Modal: Adicionar Matéria -->
+  <div class="modal-overlay" id="modal-subject" hidden>
+    <div class="modal">
+      <h3>Adicionar matéria</h3>
+      <div class="form-group">
+        <label for="subject-name">Nome da matéria</label>
+        <input type="text" id="subject-name" placeholder="Ex: Direito Penal" maxlength="60">
+      </div>
+      <div class="form-group">
+        <label for="subject-priority">Prioridade</label>
+        <select id="subject-priority">
+          <option value="alta">Alta</option>
+          <option value="media" selected>Média</option>
+          <option value="baixa">Baixa</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="btn-subject-cancel">Cancelar</button>
+        <button class="btn btn-primary" id="btn-subject-save">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Configurações Pomodoro -->
+  <div class="modal-overlay" id="modal-pomodoro" hidden>
+    <div class="modal">
+      <h3>Configurações do Pomodoro</h3>
+      <div class="form-group">
+        <label for="setting-pomodoro">Pomodoro (minutos)</label>
+        <input type="number" id="setting-pomodoro" min="1" max="120" value="25">
+      </div>
+      <div class="form-group">
+        <label for="setting-short">Pausa curta (minutos)</label>
+        <input type="number" id="setting-short" min="1" max="60" value="5">
+      </div>
+      <div class="form-group">
+        <label for="setting-long">Pausa longa (minutos)</label>
+        <input type="number" id="setting-long" min="1" max="120" value="15">
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="btn-pomodoro-cancel">Cancelar</button>
+        <button class="btn btn-primary" id="btn-pomodoro-save">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tooltip do Heatmap -->
+  <div class="heatmap-tooltip" id="heatmap-tooltip" hidden></div>
+
+  <!-- Notificação do Pomodoro -->
+  <div class="toast" id="toast" hidden></div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
